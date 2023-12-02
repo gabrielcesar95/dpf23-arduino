@@ -11,26 +11,27 @@ void setup() {
   pinMode(LED_GREEN, OUTPUT);
   pinMode(LED_YELLOW, OUTPUT);
   pinMode(LED_RED, OUTPUT);
-  
-  pinMode(ECHO,INPUT);
   pinMode(TRIG,OUTPUT);
+  pinMode(ECHO,INPUT);
 }
 
 void loop() {
   distance = getDistance(TRIG,ECHO); // Chamada da função de leitura.
   Serial.println(distance);
-  if (distance <= 3) {
-    digitalWrite(LED_GREEN, LOW);
-    digitalWrite(LED_YELLOW, LOW);
+
+  digitalWrite(LED_GREEN, LOW);
+  digitalWrite(LED_YELLOW, LOW);
+  digitalWrite(LED_RED, LOW);
+
+  // Objeto muito próximo
+  if (distance < 5) {
     digitalWrite(LED_RED, HIGH);
-  } else if (distance >= 10) {
-    digitalWrite(LED_GREEN, HIGH);
-    digitalWrite(LED_YELLOW, LOW);
-    digitalWrite(LED_RED, LOW);
-  } else {
-    digitalWrite(LED_GREEN, LOW);
+    // Distância média
+  } else if (distance < 13) {
     digitalWrite(LED_YELLOW, HIGH);
-    digitalWrite(LED_RED, LOW);
+  } else {
+    // Objeto longe
+    digitalWrite(LED_GREEN, HIGH);
   }
 }
 
